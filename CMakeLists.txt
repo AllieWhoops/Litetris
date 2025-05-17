@@ -12,7 +12,17 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp)
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/src
+)
+
+file(GLOB all_SRCS
+        "${CMAKE_SOURCE_DIR}/include/*.hpp"
+        "${CMAKE_SOURCE_DIR}/src/*.cpp"
+        )
+
+add_executable(main src/main.cpp src/grid.cpp src/gridspace.cpp include/grid.hpp include/draw.hpp src/draw.cpp include/shapes.hpp src/shapes.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics)
 

@@ -1,28 +1,35 @@
-#include "gridspace.hpp"
+#include "grid.hpp"
+#include <string>
 
 using namespace Tetris;
 
-GridSpace::GridSpace(){
-    col = None;
+GridSpace::GridSpace(){ // Constructor for GridSpace class
+    col = sf::Color::Transparent;
 }
 
-char GridSpace::GetChar(){
-    switch(this->col){
-        case Blue:
-            return 'B';
-        case Indigo:
-            return 'I';
-        case Orange:
-            return 'O';
-        case Yellow:
-            return 'Y';
-        case Green:
-            return 'G';
-        case Purple:
-            return 'P';
-        case Red:
-            return 'R';
-        default:
-            return '-';
+std::string GridSpace::GetChar(){ // Returns character representation of grid space
+    if(col == sf::Color::Cyan){
+        return "C";
+    }
+    else if(col == sf::Color::Blue){
+        return "B";
+    }
+    else if(col == Tetris::Orange){
+        return "O";
+    }
+    else if(col == sf::Color::Yellow){
+        return "Y";
+    }
+    else if(col == sf::Color::Green){
+        return "G";
+    }
+    else if(col == sf::Color::Magenta){
+        return "P";
+    }
+    else if(col == sf::Color::Red){
+        return "R";
+    }
+    else{
+        return "-";
     }
 }
