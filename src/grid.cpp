@@ -98,11 +98,12 @@ bool Grid::CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords, Tetris::S
 void Grid::DoLineClears(){
     std::vector<int> fullLines = {};
     int rowNo = 0;
-    for(auto row : arrGrid){
+    for(int y = 0; y < GRID_HEIGHT; y++){
         
-        bool isRowFull = false;
-        for(auto space : row){
-            if(space.col == sf::Color::Transparent) isRowFull = false;
+        bool isRowFull = true;
+
+        for(int x = 0; x < GRID_WIDTH; x++){
+            if(arrGrid[x][y].col == sf::Color::Transparent) isRowFull = false;
         }
         if(isRowFull){
             fullLines.push_back(rowNo);
@@ -110,16 +111,21 @@ void Grid::DoLineClears(){
         rowNo++;
     }
 
+    std::cout << "No. full lines: " << fullLines.size() << "\n";
+
     for(auto rowIdx : fullLines){
-        for(auto space : arrGrid[rowIdx]){
-            space.col = sf::Color::Transparent;
-            for(int row = rowIdx; row > 0; row--){
-                arrGrid[row] = arrGrid[row-1];
-            }
-            for(auto space : arrGrid[0]){
-                space.col = sf::Color::Transparent;
+        for(int x = 0; x < GRID_WIDTH; x++){
+            arrGrid[x][rowIdx].col = sf::Color::Transparent;
+        }
+        for(int row = rowIdx; row > 0; row--){
+            for(int x = 0; x < GRID_WIDTH; x++){
+                arrGrid[x][row] = arrGrid[x][row-1];
             }
         }
+        for(int x = 0; x < GRID_WIDTH; x++){
+            arrGrid[x][0].col = sf::Color::Transparent;
+        }
+        std::cout << "Cleared row " << rowIdx << "\n";
     }
 
 }
