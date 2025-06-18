@@ -17,7 +17,14 @@ namespace Tetris::Shapes{
         L
     };
 
-    class Shape{
+    enum Direction{ // Enum for direction of move.
+        Up,
+        Down,
+        Left,
+        Right
+    };
+
+    class Shape{ // Class for a tetris piece.
         enum ShapeType type;
         std::array<std::array<int, 2>, 4> coords;
         std::array<int, 2> origin;
@@ -30,9 +37,22 @@ namespace Tetris::Shapes{
             void SetCoords();
             std::array<std::array<int, 2>, 4> GetCoords();
             void Rotate(bool clockwise = true);
+            std::array<std::array<int, 2>, 4> TryRotate(bool clockwise = true);
+            std::array<std::array<int, 2>, 4> TryMove(enum Direction direction);
             void Lower();
+            void Move(enum Direction direction);
             
+    };
+    
+    class SevenBag
+    {
+        std::vector<int> bag;
+        void RefreshBag();
+
+        public:
+            SevenBag();
+            enum ShapeType GetShape();
             
     };
 
-}
+};

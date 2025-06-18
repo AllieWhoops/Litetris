@@ -37,10 +37,9 @@ namespace Tetris
             std::string ToString();
             void DrawGrid(sf::RenderWindow &window);
             void ClearSpaces(std::array<std::array<int, 2>, 4> spaces);
-            bool CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords);
-            
+            bool CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords, Tetris::Shapes::Shape thisShape);
+            void DoLineClears();
     };
-
 
 
 }

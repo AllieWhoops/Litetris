@@ -181,6 +181,157 @@ void Tetris::Shapes::Shape::DoIRotation(){ // Method for handing rotation of I s
     }
 }
 
+std::array<std::array<int, 2>, 4> Tetris::Shapes::Shape::TryRotate(bool clockwise){ // Checks if rotation is legal
+    std::array<std::array<int, 2>, 2> rotMatrix;
+
+    std::array<std::array<int, 2>, 4> resArray = coords;
+
+    if(clockwise){ // Position number & rotation matrix set based on rotation direction
+        rotMatrix = {{
+            {0, 1},
+            {-1, 0}
+        }};
+    }
+    else{
+        rotMatrix = {{
+            {0, -1},
+            {1, 0}
+        }};
+    }
+    
+    switch(type){
+        case I: // I shape is weiiiiird so we just brute force the rotation :)
+            /* Changing to:
+            - - X -
+            - - X -
+            - - X -
+            - - X -
+            */
+            if(position == 0)
+            {
+                resArray[0] = {origin[0] + 1, origin[1] - 1};
+                resArray[1] = {origin[0] + 1, origin[1]    };
+                resArray[2] = {origin[0] + 1, origin[1] + 1};
+                resArray[3] = {origin[0] + 1, origin[1] + 2};
+            }
+
+            /* Changing to:
+            - - - -
+            - - - -
+            X X X X
+            - - - -
+            */
+            else if(position == 1)
+            {
+                resArray[0] = {origin[0] - 1, origin[1] + 1};
+                resArray[1] = {origin[0],     origin[1] + 1};
+                resArray[2] = {origin[0] + 1, origin[1] + 1};
+                resArray[3] = {origin[0] + 2, origin[1] + 1};
+            }
+
+            /* Changing to:
+            - X - -
+            - X - -
+            - X - -
+            - X -
+            */
+            else if(position == 2)
+            {
+                resArray[0] = {origin[0], origin[1] - 1};
+                resArray[1] = {origin[0], origin[1]    };
+                resArray[2] = {origin[0], origin[1] + 1};
+                resArray[3] = {origin[0], origin[1] + 2};
+            }
+
+            /* Changing to:
+            - - - -
+            X X X X
+            - - - -
+            - - - -
+            */
+            else
+            {
+                resArray[0] = {origin[0] - 1, origin[1]};
+                resArray[1] = {origin[0],     origin[1]};
+                resArray[2] = {origin[0] + 1, origin[1]};
+                resArray[3] = {origin[0] + 2, origin[1]}; 
+            }
+            return resArray;
+        case O: return resArray; // O shape does not change position so we just return
+        default: break;
+    }
+    
+    for(int i = 0; i < 4; i++){ // Performs 90' rotation on the coordinates with the power of matrices
+        int x = resArray[i][0] - origin[0];
+        int y = resArray[i][1] - origin[1];
+
+        resArray[i][0] = rotMatrix[0][0] * x + rotMatrix[1][0] * y + origin[0];
+        resArray[i][1] = rotMatrix[0][1] * x + rotMatrix[1][1] * y + origin[1];
+    }
+
+    return resArray;
+}
+
+std::array<std::array<int, 2>, 4> Tetris::Shapes::Shape::TryMove(enum Direction direction){ // Checks if directional move is legal
+    std::array<std::array<int, 2>, 4> resArray = coords;
+    
+    switch(direction){
+        case Tetris::Shapes::Up:
+            for(int i = 0; i < 4; i++){
+                resArray[i][1]--;
+            }
+            break;
+        case Tetris::Shapes::Down:
+            for(int i = 0; i < 4; i++){
+                resArray[i][1]++;
+            }
+            break;
+        case Tetris::Shapes::Left:
+            for(int i = 0; i < 4; i++){
+                resArray[i][0]--;
+            }
+            break;
+        case Tetris::Shapes::Right:
+        for(int i = 0; i < 4; i++){
+                resArray[i][0]++;
+            }
+            break;
+        default: return resArray;
+    }
+
+    return resArray;
+}
+
+void Tetris::Shapes::Shape::Move(enum Tetris::Shapes::Direction direction){ // Move shape one tile in any direction
+    switch(direction){
+        case Tetris::Shapes::Up:
+            for(int i = 0; i < 4; i++){
+                coords[i][1]--;
+            }
+            origin[1]--; // Origin also lowered by one to preserve rotation
+            break;
+        case Tetris::Shapes::Down:
+            for(int i = 0; i < 4; i++){
+                coords[i][1]++;
+            }
+            origin[1]++; // Origin also lowered by one to preserve rotation
+            break;
+        case Tetris::Shapes::Left:
+            for(int i = 0; i < 4; i++){
+                coords[i][0]--;
+            }
+            origin[0]--; // Origin also lowered by one to preserve rotation
+            break;
+        case Tetris::Shapes::Right:
+        for(int i = 0; i < 4; i++){
+                coords[i][0]++;
+            }
+            origin[0]++; // Origin also lowered by one to preserve rotation
+            break;
+        default: return;
+    }
+}
+
 void Tetris::Shapes::Shape::Lower(){ // Move shape one tile lower
     for(int i = 0; i < 4; i++){
         coords[i][1]++;
