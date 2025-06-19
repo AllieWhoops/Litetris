@@ -39,6 +39,7 @@ namespace Tetris
             void ClearSpaces(std::array<std::array<int, 2>, 4> spaces);
             bool CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords, Tetris::Shapes::Shape thisShape);
             void DoLineClears();
+            bool CheckIfGameOver(Tetris::Shapes::Shape thisShape);
     };
 
 

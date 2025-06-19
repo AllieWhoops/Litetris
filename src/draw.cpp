@@ -2,22 +2,35 @@
 #include "shapes.hpp"
 
 void Tetris::Draw::DrawEdges(sf::RenderWindow &window) // Draw the bounding box around the Tetrix grid
-{        std::array left_line = {
-            sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER, 0.5f*WINDOW_BORDER + GRID_SIZE*Y_OFFSET)},
-            sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
-        };
-        std::array bottom_line = {
-            sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)},
-            sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + GRID_WIDTH*GRID_SIZE,  0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
-        };
-        std::array right_line = {
-            sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + GRID_WIDTH*GRID_SIZE, 0.5f*WINDOW_BORDER + GRID_SIZE*Y_OFFSET)},
-            sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + GRID_WIDTH*GRID_SIZE, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
-        };
+{       
+    std::array left_line = {
+        sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER, 0.5f*WINDOW_BORDER + GRID_SIZE*Y_OFFSET)},
+        sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
+    };
+    std::array bottom_line = {
+        sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)},
+        sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + GRID_WIDTH*GRID_SIZE,  0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
+    };
+    std::array right_line = {
+        sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + GRID_WIDTH*GRID_SIZE, 0.5f*WINDOW_BORDER + GRID_SIZE*Y_OFFSET)},
+        sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + GRID_WIDTH*GRID_SIZE, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
+    };
 
-        window.draw(left_line.data(), left_line.size(), sf::PrimitiveType::Lines);
-        window.draw(bottom_line.data(), bottom_line.size(), sf::PrimitiveType::Lines);
-        window.draw(right_line.data(), right_line.size(), sf::PrimitiveType::Lines);
+    window.draw(left_line.data(), left_line.size(), sf::PrimitiveType::Lines);
+    window.draw(bottom_line.data(), bottom_line.size(), sf::PrimitiveType::Lines);
+    window.draw(right_line.data(), right_line.size(), sf::PrimitiveType::Lines);
+}
+
+void Tetris::Draw::DrawGuidelines(sf::RenderWindow &window){ // Draw the guidelines which aid readability.
+    for(int x = 0; x < GRID_WIDTH; x++){
+        for(int y = 0; y < GRID_HEIGHT; y++){
+            std::array line = {
+                sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + 0.1f*x*GRID_WIDTH*GRID_SIZE, 0.5f*WINDOW_BORDER + GRID_SIZE*Y_OFFSET)},
+                sf::Vertex{sf::Vector2f(0.5f*WINDOW_BORDER + 0.1f*x*GRID_WIDTH*GRID_SIZE, 0.5f*WINDOW_BORDER + GRID_HEIGHT*GRID_SIZE)}
+            };
+            window.draw(line.data(), line.size(), sf::PrimitiveType::Lines);
+        }
+    }
 }
 
 void Tetris::Draw::DrawSquare(sf::RenderWindow &window, int x, int y, sf::Color col){ // Method for drawing each box in the grid

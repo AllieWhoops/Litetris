@@ -6,6 +6,6 @@
 
 namespace Tetris::Draw{
     void DrawEdges(sf::RenderWindow &window);
-    
+    void DrawGuidelines(sf::RenderWindow &window);
     void DrawSquare(sf::RenderWindow &window, int x, int y, sf::Color col);
 }

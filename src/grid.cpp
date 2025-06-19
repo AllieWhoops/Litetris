@@ -72,7 +72,7 @@ bool Grid::CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords, Tetris::S
             return false;
         }
         if(point[1] >= GRID_HEIGHT || point[1] < 0){
-            std::cout << "Y coord not in range";
+            std::cout << "Y coord not in range" << "\n";
             return false;
         }
 
@@ -127,6 +127,16 @@ void Grid::DoLineClears(){
         }
         std::cout << "Cleared row " << rowIdx << "\n";
     }
+
+}
+
+bool Grid::CheckIfGameOver(Tetris::Shapes::Shape thisShape){
+    for(auto point : thisShape.GetCoords()){
+        if(point[1] < 2){
+            return true;
+        }
+    }
+    return false;
 
 }
 
