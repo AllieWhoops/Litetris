@@ -15,6 +15,7 @@ FetchContent_MakeAvailable(SFML)
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
     ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/resources
 )
 
 file(GLOB all_SRCS
@@ -22,7 +23,10 @@ file(GLOB all_SRCS
         "${CMAKE_SOURCE_DIR}/src/*.cpp"
         )
 
+file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources/Bytesized-Regular.ttf DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/bin/Debug)
+
 add_executable(main src/main.cpp src/grid.cpp src/gridspace.cpp include/grid.hpp include/draw.hpp src/draw.cpp include/shapes.hpp src/shapes.cpp src/bag.cpp)
 target_compile_features(main PRIVATE cxx_std_17)
-target_link_libraries(main PRIVATE SFML::Graphics)
+target_link_libraries(main PRIVATE SFML::Graphics "-static")
+
 
