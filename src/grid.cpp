@@ -83,8 +83,7 @@ bool Grid::CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords, Tetris::S
                 if(point == myPoint){
                     problemPoints--;
                 }   
-            }
-            
+            }  
         }
     }
 

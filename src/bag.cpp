@@ -5,6 +5,7 @@
 #include <random>
 #include <list>
 #include <vector>
+#include <algorithm>
 
 using namespace Tetris::Shapes;
 

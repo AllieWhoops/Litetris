@@ -17,8 +17,6 @@ namespace Tetris
 
     class GridSpace // Class wrapper for GridColour enum 
     {
-        
-
         public:
             GridSpace();
             std::string GetChar();
@@ -32,11 +30,11 @@ namespace Tetris
 
         public:
             Grid();
-            void AddShape(int slots[4][2], sf::Color col);
-            void AddShape(Tetris::Shapes::Shape shape);
-            std::string ToString();
-            void DrawGrid(sf::RenderWindow &window);
-            void ClearSpaces(std::array<std::array<int, 2>, 4> spaces);
+            void AddShape(int slots[4][2], sf::Color col); // Adds shape to grid given slots & colour
+            void AddShape(Tetris::Shapes::Shape shape); // Adds shape to grid given Shape object
+            std::string ToString(); // Return string representation of grid
+            void DrawGrid(sf::RenderWindow &window); // Calls DrawSquare to draw every space on the grid.
+            void ClearSpaces(std::array<std::array<int, 2>, 4> spaces); // Sets given squares in grid to transparent
             bool CheckMoveLegal(std::array<std::array<int, 2>, 4> newCoords, Tetris::Shapes::Shape thisShape);
             void DoLineClears();
             bool CheckIfGameOver(Tetris::Shapes::Shape thisShape);
